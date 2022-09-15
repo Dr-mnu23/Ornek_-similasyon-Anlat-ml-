@@ -1,5 +1,117 @@
 """ gezegen simulasyonu"""
 
+# önce çalışma ortamı oluştrualım
+
+import pygame
+import math
+pygame.init()
+
+WIDTH, HEIGHT =  800, 800
+WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Planet Simulation")
+
+
+
+def main():
+	run = True
+	clock = pygame.time.Clock()
+
+
+
+	while run:
+		clock.tick(60)
+		WIN.fill((0, 0, 0))
+
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				run = False
+
+
+
+		pygame.display.update()
+
+	pygame.quit()
+
+
+main()
+
+# daha sonra bir gezegen tanımlayalım gezegen için bir renk astronic unic tipind ebir uzaklık bir boyut ve bir hız belirleyelim
+#Bunun için gezegen adında bir sınıf oluşturalım Birden fazla gezegenimiz olacağı için her birini te tek çizmekle uğraşmak mantıksız
+# geegen sınıfının başında temel parametrelerimiz belirleyelim
+# Daha sonra init kısmını yazalım. Burada bu klassı çağırırken gezegenle ilgili temel parametreleri alacağız ve bunları her bir gezegene atayacağız
+# daha sonra yine gezegen klassının içerisinde bu gezegeni çizdirelim
+# dikkat !!! gezegenin nereye çizileceğini belirleseniz bile earth.draw demezseniz bu draw işlemini çağırmamış olurusnuz. gözükmez
+
+
+import pygame
+import math
+pygame.init()
+
+WIDTH, HEIGHT =  800, 800
+WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Planet Simulation")
+
+MAVI = (100, 149, 237)
+
+
+class Planet:
+	AU = 149.6e6 * 1000
+	G = 6.67428e-11
+	SCALE = 250 / AU  # 1AU = 100 pixel
+	TIMESTEP = 3600*24 # 1 gün
+
+	def __init__(self, x, y, radius, color, mass):
+		self.x = x
+		self.y = y
+		self.radius = radius
+		self.color = color
+		self.mass = mass
+
+
+
+
+	def draw(self, win):
+		x = self.x * self.SCALE + WIDTH / 2
+		y = self.y * self.SCALE + HEIGHT / 2
+		pygame.draw.circle(win, self.color, (x, y), self.radius)
+
+
+
+
+def main():
+	run = True
+	clock = pygame.time.Clock()
+
+
+	earth = Planet(-1 * Planet.AU, 0, 16, MAVI, 5.9742 * 10**24)
+
+
+	while run:
+		clock.tick(60)
+		WIN.fill((0, 0, 0))
+
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				run = False
+                
+
+		earth.draw(WIN)
+		pygame.display.update()
+        
+
+	pygame.quit()
+
+
+main()
+
+# şimdi kodumuza diğer gezegenleri de ekleyelim. Tek yapmamız gerek her bir gezegenin parametrelerini verik az önce oluşturduğumuz sınıfı çağırmak
+
+
+
+
+# nihai kodumuzun şu şekilde olması gerekir
+
+
 import pygame
 import math
 pygame.init()
